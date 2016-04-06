@@ -366,4 +366,28 @@ public class TenDayDate {
     public void setTzLong(String tzLong) {
         this.tzLong = tzLong;
     }
+
+
+    @Override
+    public String toString() {
+        return "TenDayDate{" +
+                "epoch='" + epoch + '\'' +
+                ", pretty='" + pretty + '\'' +
+                ", day=" + day +
+                ", month=" + month +
+                ", year=" + year +
+                ", yday=" + yday +
+                ", hour=" + hour +
+                ", min='" + min + '\'' +
+                ", sec=" + sec +
+                ", isdst='" + isdst + '\'' +
+                ", monthname='" + monthname + '\'' +
+                ", monthnameShort='" + monthnameShort + '\'' +
+                ", weekdayShort='" + weekdayShort + '\'' +
+                ", weekday='" + weekday + '\'' +
+                ", ampm='" + ampm + '\'' +
+                ", tzShort='" + tzShort + '\'' +
+                ", tzLong='" + tzLong + '\'' +
+                '}';
+    }
 }

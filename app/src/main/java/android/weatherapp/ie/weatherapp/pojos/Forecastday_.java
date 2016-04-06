@@ -9,16 +9,16 @@ import com.google.gson.annotations.SerializedName;
 public class Forecastday_ {
 
 
-    @SerializedName("mTenDayDate")
+    @SerializedName("date")
     @Expose
     private TenDayDate mTenDayDate;
     @SerializedName("period")
     @Expose
     private long period;
-    @SerializedName("mTenDayHigh")
+    @SerializedName("high")
     @Expose
     private TenDayHigh mTenDayHigh;
-    @SerializedName("mTenDayLow")
+    @SerializedName("low")
     @Expose
     private TenDayLow mTenDayLow;
     @SerializedName("conditions")
@@ -179,4 +179,18 @@ public class Forecastday_ {
         this.skyicon = skyicon;
     }
 
+
+    @Override
+    public String toString() {
+        return "Forecastday_{" +
+                "mTenDayDate=" + mTenDayDate +
+                ", period=" + period +
+                ", mTenDayHigh=" + mTenDayHigh +
+                ", mTenDayLow=" + mTenDayLow +
+                ", conditions='" + conditions + '\'' +
+                ", icon='" + icon + '\'' +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", skyicon='" + skyicon + '\'' +
+                '}';
+    }
 }

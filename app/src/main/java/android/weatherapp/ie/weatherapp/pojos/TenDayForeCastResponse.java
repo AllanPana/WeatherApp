@@ -53,4 +53,12 @@ public class TenDayForeCastResponse {
         this.mTenDayForecast = tenDayForecast;
     }
 
+
+    @Override
+    public String toString() {
+        return "TenDayForeCastResponse{" +
+                "location=" + location +
+                ", mTenDayForecast=" + mTenDayForecast +
+                '}';
+    }
 }

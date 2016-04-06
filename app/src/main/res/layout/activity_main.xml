@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@drawable/badclouds"
-                android:fitsSystemWindows="true">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
 
 
     <LinearLayout
         android:id="@+id/ll_search_container"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
         android:weightSum="2">
 
 
@@ -20,33 +32,34 @@
             android:id="@+id/et_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/add_bg"
             android:layout_marginRight="10dp"
-            android:paddingLeft="10dp"
-            android:layout_weight="1.7"
+            android:layout_weight="1.75"
+            android:background="@drawable/add_bg"
+            android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="ADD CITY"/>
+            android:hint="ADD CITY"
+            android:paddingLeft="10dp"/>
 
         <ImageButton
             android:id="@+id/ib_remove"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/remove"
-            android:layout_weight="0.3"/>
+            android:layout_weight="0.25"
+            android:background="@drawable/remove"/>
 
 
     </LinearLayout>
 
+
     <ListView
         android:id="@+id/lv_search_results"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@id/ll_search_container">
-
-    </ListView>
+        android:layout_below="@id/ll_search_container"
+        android:background="#ffffff"
+        android:visibility="invisible"/>
 
 
 </RelativeLayout>

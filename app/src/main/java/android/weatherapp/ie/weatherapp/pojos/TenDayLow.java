@@ -51,4 +51,12 @@ public class TenDayLow {
     public void setCelsius(String celsius) {
         this.celsius = celsius;
     }
+
+    @Override
+    public String toString() {
+        return "TenDayLow{" +
+                "fahrenheit='" + fahrenheit + '\'' +
+                ", celsius='" + celsius + '\'' +
+                '}';
+    }
 }

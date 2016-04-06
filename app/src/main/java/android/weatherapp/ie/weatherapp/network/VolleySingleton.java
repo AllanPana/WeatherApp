@@ -56,7 +56,7 @@ public class VolleySingleton {
      *
      * @return single instance of this class
      */
-    public static VolleySingleton getVolleySingletonInstance(){
+    public synchronized static VolleySingleton getVolleySingletonInstance(){
         if(sVolleySingletonInstance == null){
             sVolleySingletonInstance = new VolleySingleton();
         }

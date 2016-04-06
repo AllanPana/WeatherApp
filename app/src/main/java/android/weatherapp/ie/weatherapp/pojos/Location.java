@@ -131,4 +131,20 @@ public class Location {
     public void setL(String l) {
         this.l = l;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "type='" + type + '\'' +
+                ", country='" + country + '\'' +
+                ", countryIso3166='" + countryIso3166 + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lon='" + lon + '\'' +
+                ", zip='" + zip + '\'' +
+                ", l='" + l + '\'' +
+                '}';
+    }
 }

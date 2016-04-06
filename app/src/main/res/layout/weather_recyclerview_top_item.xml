@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/overlay_3"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:text="LONDON"
+            android:textColor="@android:color/white"/>
+
+
+        <ImageView
+            android:id="@+id/im_cloud"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:baselineAlignBottom="true"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_rain"/>
+
+        <TextView
+            android:id="@+id/tv_temp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/im_cloud"
+            android:gravity="center_vertical"
+            android:text="21˚"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/tv_temp"
+            android:gravity="center_vertical"
+            android:text="16:00"
+            android:textColor="@android:color/white"/>
+
+    </RelativeLayout>
+</RelativeLayout>

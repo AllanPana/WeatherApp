@@ -32,4 +32,10 @@ public class TenDayForecast {
         this.mTenDaySimpleforecast = tenDaySimpleforecast;
     }
 
+    @Override
+    public String toString() {
+        return "TenDayForecast{" +
+                "mTenDaySimpleforecast=" + mTenDaySimpleforecast +
+                '}';
+    }
 }

@@ -33,4 +33,11 @@ public class TenDaySimpleforecast {
     public void setForecastday(List<Forecastday_> forecastday) {
         this.forecastday = forecastday;
     }
+
+    @Override
+    public String toString() {
+        return "TenDaySimpleforecast{" +
+                "forecastday=" + forecastday +
+                '}';
+    }
 }

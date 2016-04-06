@@ -15,7 +15,7 @@ public class HourlyForecast {
     @Expose
     private HourlyFCTTIME HourlyFCTTIME;
 
-    @SerializedName("mHourlyTemp")
+    @SerializedName("temp")
     @Expose
     private HourlyTemp mHourlyTemp;
 
