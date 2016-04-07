@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.weatherapp.ie.weatherapp.database.CurrentWeatherDb;
 import android.weatherapp.ie.weatherapp.network.GsonRequest;
 import android.weatherapp.ie.weatherapp.network.VolleySingleton;
 import android.weatherapp.ie.weatherapp.pojos.AutoCompleteSearchForecast;
@@ -208,6 +209,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //getHourlyForecastResponse(url);
         TenDayWeatherService.setTenDayForecastResponse(url);
 
+        boolean inserted = new CurrentWeatherDb(MainActivity.this).insertData(url,placeName.get(position));
+        if(inserted == true){
+            Log.d("inserte", "success ====" + url + "=====" + placeName.get(position));
+        }else {
+            Log.d("inserte", "failed");
+        }
+
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -229,6 +237,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mWeatherRecyclerViewAdapter.notifyDataSetChanged();
 
         hideSoftKeyBoard();
+
+
     }
 
 
