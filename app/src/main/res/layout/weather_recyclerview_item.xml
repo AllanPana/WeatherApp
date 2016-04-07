@@ -44,7 +44,7 @@
             android:layout_toLeftOf="@id/im_cloud"
             android:text="21˚"
             android:layout_marginRight="10dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textSize="24sp"/>
@@ -56,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/tv_temp"
             android:gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
             android:textColor="@android:color/white"
             android:text="16:00"/>
 

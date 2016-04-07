@@ -21,6 +21,7 @@ import java.util.TimeZone;
 public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecyclerViewAdapter.WeatherDataViewHolder> {
 
 
+    private static final String DEGREE_CELCIUS = "\u00b0";
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private int mHolderViewType;
@@ -54,17 +55,19 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
     public void onBindViewHolder(WeatherDataViewHolder holder, int position) {
         CurrentObservation currentWeather = mList.get(position);
 
+        String stringTemp = String.format("%.0f",currentWeather.getTempC());
+
         //need this string tz for setting up the date/time
         String tz = currentWeather.getLocalTzLong();
         holder.tv_city.setText(currentWeather.getCurrentWeatherDisplayLocation().getCity());
-        holder.tv_time.setText(setTime(currentWeather.getObservationTimeRfc822(),tz));
-        holder.tv_temp.setText(currentWeather.getTempC()+"");
+        holder.tv_time.setText(setTime(currentWeather.getLocalTimeRfc822(),tz));
+        holder.tv_temp.setText(stringTemp+DEGREE_CELCIUS);
         Log.d("time",currentWeather.getObservationTimeRfc822());
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return (mList != null ? mList.size() : 0);
     }
 
 

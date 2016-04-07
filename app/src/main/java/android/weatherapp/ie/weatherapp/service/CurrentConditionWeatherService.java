@@ -22,7 +22,6 @@ public class CurrentConditionWeatherService {
     private static final String WUNDERGROUND_REQUEST_FORMAT = ".json";
 
     private static List<CurrentObservation> mCurrentObservations = new ArrayList<>();
-    private static List<String> sStringUrls = new ArrayList<>();
 
 
 
@@ -35,13 +34,12 @@ public class CurrentConditionWeatherService {
         GsonRequest<CurrentWeatherResponse> request = new GsonRequest<>(WUNDERGROUND_CURRENT_CONDITION_URL +query,
                 CurrentWeatherResponse.class,
                 new Response.Listener<CurrentWeatherResponse>() {
-
                     @Override
                     public void onResponse(CurrentWeatherResponse response) {
 
                         //setCurrentObservations(response.getCurrentObservation());
                         mCurrentObservations.add(response.getCurrentObservation());
-                        setCurrentObservations(mCurrentObservations);
+                        //setCurrentObservations(mCurrentObservations);
 
 
                     }
@@ -56,6 +54,7 @@ public class CurrentConditionWeatherService {
 
         /*request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
+
         VolleySingleton.getVolleySingletonInstance().addRequestQueue(request);
     }
 
