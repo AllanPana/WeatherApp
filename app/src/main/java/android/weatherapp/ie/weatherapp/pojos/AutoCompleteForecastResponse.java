@@ -19,6 +19,10 @@ public class AutoCompleteForecastResponse {
     @Expose
     private List<AutoCompleteSearchForecast> mForecastResults = new ArrayList<>();
 
+
+
+
+
     /**
      *
      * @return

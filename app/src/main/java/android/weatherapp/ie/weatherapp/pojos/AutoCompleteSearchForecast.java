@@ -45,6 +45,15 @@ public class AutoCompleteSearchForecast {
     @Expose
     private String lon;
 
+
+    public AutoCompleteSearchForecast() {
+    }
+
+    public AutoCompleteSearchForecast(String l, String name) {
+        this.l = l;
+        this.name = name;
+    }
+
     /**
      *
      * @return
