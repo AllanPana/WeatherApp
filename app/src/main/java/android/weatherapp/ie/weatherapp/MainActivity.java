@@ -36,7 +36,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private static final String WUNDERGROUND_CURRENT_CONDITION_URL = "http://api.wunderground.com/api/8259534bbb5f8830/conditions";
+    private static final String WUNDERGROUND_CURRENT_CONDITION_URL = "http://api.wunderground.com/api/38ef208cc476fe4b/conditions";
     private static final String WUNDERGROUND_HOURLY_FORECAST_URL = "http://api.wunderground.com/api/a9ad5218009bdc9a/geolookup/hourly/q/";
     private static final String WUNDERGROUND_10DAY_FORECAST_URL = "http://api.wunderground.com/api/a9ad5218009bdc9a/geolookup/forecast10day/q";
     private static final String WUNDERGROUND_AUTO_COMPLETE_URL = "http://autocomplete.wunderground.com/aq?query=";
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayAdapter<String> mArrayAdapter;
     private List<String> placeName = new ArrayList<>();
     List<String> locationUrls = new ArrayList<>();
-    private List<AutoCompleteSearchForecast> mAutoCompleteSearchForecasts = new ArrayList<>();
+    private List<AutoCompleteSearchForecast> mAutoCompleteSearchForecastsFromDB = new ArrayList<>();
 
     private LinearLayout mLinearLayout;
     private EditText mEditTextSearch;
@@ -69,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         hideSoftKeyBoard();
 
         mCurrentWeatherDb = new CurrentWeatherDb(this);
-        addDefaultLocationForecast();
         setAllForecastFromDb();
+        addDefaultLocationForecast();
+
 
         mHandler = new Handler(getMainLooper());
         mLinearLayout = (LinearLayout) findViewById(R.id.ll_search_container);
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
     public void setEditTextSearch() {
         mEditTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 for (AutoCompleteSearchForecast result : list) {
                     placeName.add(result.getName());
                 }
+
                 mArrayAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, placeName);
                 mListViewSearchResult.setAdapter(mArrayAdapter);
             }
@@ -182,18 +183,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mCurrentObservations.clear();
+
         mListViewSearchResult.setVisibility(View.INVISIBLE);
         mEditTextSearch.setText("");
 
         addForecastDataToDb(position);
+        setAllForecastFromDb();
         setCurrentWeatherCondition(locationUrls);
         mWeatherRecyclerViewAdapter.notifyDataSetChanged();
 
-        List<AutoCompleteSearchForecast> list = mCurrentWeatherDb.getAllSavedWeatherData();
-        for(AutoCompleteSearchForecast a : list){
-            Log.d("test added",a.getName());
-        }
 
         hideSoftKeyBoard();
         placeName.clear();
@@ -214,49 +212,53 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         boolean inserted = mCurrentWeatherDb.insertWeatherData(url, placeName);
         if (inserted == true) {
-            locationUrls.add(url + ".json");
+            locationUrls.add(url + WUNDERGROUND_REQUEST_FORMAT);
         } else {
             return;
         }
     }
 
 
+    private void setAllForecastFromDb() {
+        mAutoCompleteSearchForecastsFromDB = mCurrentWeatherDb.getAllSavedWeatherData();
+        if (mAutoCompleteSearchForecastsFromDB != null) {
+            for (AutoCompleteSearchForecast forecast : mAutoCompleteSearchForecastsFromDB) {
 
-    private void setAllForecastFromDb(){
-        List<AutoCompleteSearchForecast> forecastList = mCurrentWeatherDb.getAllSavedWeatherData();
-        if(forecastList!=null){
-            for(AutoCompleteSearchForecast forecast : forecastList){
-                locationUrls.add(forecast.getL()+".json");
+                locationUrls.add(forecast.getL() + WUNDERGROUND_REQUEST_FORMAT);
             }
-        }else {
-            Toast.makeText(this,"",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "", Toast.LENGTH_LONG).show();
         }
-
     }
 
 
-    //insert default city  = must be called only once
+    //add/insert default city
     private void addDefaultLocationForecast() {
         List<AutoCompleteSearchForecast> forecastList = new ArrayList<>();
         forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03969", "Dublin"));
         forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03772", "London"));
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.94767", "Sydney"));
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.WZBAA", "Beijing"));
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.37.07156", "Paris"));
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.17.98426", "Olongapo"));
+        //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.94767", "Sydney"));
+        //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.WZBAA", "Beijing"));
+        //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.37.07156", "Paris"));
+        //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.17.98426", "Olongapo"));
 
         for (AutoCompleteSearchForecast forecast : forecastList) {
             String url = forecast.getL();
             String placeName = forecast.getName();
 
-            boolean inserted = mCurrentWeatherDb.insertWeatherData(url, placeName);
+            if (!(mAutoCompleteSearchForecastsFromDB.contains(forecast))) {
 
-            if (inserted == true) {
-                //locationUrls.add(url + ".json");
-                Log.d("success", "success");
-            } else {
-                return;
+                boolean inserted = mCurrentWeatherDb.insertWeatherData(url, placeName);
+                if (inserted == true) {
+                    //locationUrls.add(url + ".json");
+                    Log.d("success", "success");
+                } else {
+                    Log.d("allan", "no object added===================================================================");
+
+                }
+
             }
+
         }
     }
 
