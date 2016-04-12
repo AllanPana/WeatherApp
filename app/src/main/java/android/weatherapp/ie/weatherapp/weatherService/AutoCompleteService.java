@@ -1,6 +1,5 @@
-package android.weatherapp.ie.weatherapp.service;
+package android.weatherapp.ie.weatherapp.weatherService;
 
-import android.util.Log;
 import android.weatherapp.ie.weatherapp.network.GsonRequest;
 import android.weatherapp.ie.weatherapp.network.VolleySingleton;
 import android.weatherapp.ie.weatherapp.pojos.AutoCompleteForecastResponse;

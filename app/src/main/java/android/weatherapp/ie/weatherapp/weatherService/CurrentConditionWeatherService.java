@@ -1,11 +1,10 @@
-package android.weatherapp.ie.weatherapp.service;
+package android.weatherapp.ie.weatherapp.weatherService;
 
 import android.weatherapp.ie.weatherapp.network.GsonRequest;
 import android.weatherapp.ie.weatherapp.network.VolleySingleton;
 import android.weatherapp.ie.weatherapp.pojos.CurrentObservation;
 import android.weatherapp.ie.weatherapp.pojos.CurrentWeatherResponse;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 

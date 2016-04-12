@@ -1,19 +1,14 @@
-package android.weatherapp.ie.weatherapp.service;
+package android.weatherapp.ie.weatherapp.weatherService;
 
-import android.util.Log;
 import android.weatherapp.ie.weatherapp.network.GsonRequest;
 import android.weatherapp.ie.weatherapp.network.VolleySingleton;
-import android.weatherapp.ie.weatherapp.pojos.AutoCompleteForecastResponse;
-import android.weatherapp.ie.weatherapp.pojos.AutoCompleteSearchForecast;
 import android.weatherapp.ie.weatherapp.pojos.Forecastday_;
-import android.weatherapp.ie.weatherapp.pojos.HourlyWeatherResponse;
 import android.weatherapp.ie.weatherapp.pojos.Location;
 import android.weatherapp.ie.weatherapp.pojos.TenDayForeCastResponse;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

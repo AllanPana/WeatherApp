@@ -19,14 +19,12 @@ import android.weatherapp.ie.weatherapp.network.VolleySingleton;
 import android.weatherapp.ie.weatherapp.pojos.AutoCompleteSearchForecast;
 import android.weatherapp.ie.weatherapp.pojos.CurrentObservation;
 import android.weatherapp.ie.weatherapp.pojos.CurrentWeatherResponse;
-import android.weatherapp.ie.weatherapp.service.AutoCompleteService;
-import android.weatherapp.ie.weatherapp.service.CurrentConditionWeatherService;
+import android.weatherapp.ie.weatherapp.weatherService.AutoCompleteService;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -65,11 +63,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         hideSoftKeyBoard();
 
         mDefaultLocationWeatherDb = new DefaultLocationWeatherDb(this);
-        mAutoCompleteSearchForecastsFromDB = mDefaultLocationWeatherDb.getAllSavedWeatherData();
-        setAllForecastFromDb();
         if(mAutoCompleteSearchForecastsFromDB.isEmpty()){
             addDefaultLocationForecast();
         }
+        mAutoCompleteSearchForecastsFromDB = mDefaultLocationWeatherDb.getAllSavedWeatherData();
+        setAllForecastFromDb();
+
 
 
         mHandler = new Handler(getMainLooper());
@@ -80,23 +79,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-        setEditTextSearch();
+
         setCurrentWeatherCondition(locationUrls);
+        setEditTextSearch();
         hideSearch();
     }
 
 
 
-    void setCurrentWeatherCondition(List<String> query) {
+    void setCurrentWeatherCondition(final List<String> query) {
         GsonRequest<CurrentWeatherResponse> request = null;
-        for (String url : query) {
-            request = new GsonRequest<>(WUNDERGROUND_CURRENT_CONDITION_URL + url,
+        for (final String url : query) {
+            request = new GsonRequest<>(WUNDERGROUND_CURRENT_CONDITION_URL + url+WUNDERGROUND_REQUEST_FORMAT,
                     CurrentWeatherResponse.class,
                     new Response.Listener<CurrentWeatherResponse>() {
                         @Override
                         public void onResponse(CurrentWeatherResponse response) {
 
-                            mCurrentObservations.add(response.getCurrentObservation());
+                            //if(!(locationUrls.contains(url))){
+                                mCurrentObservations.add(response.getCurrentObservation());
+                            //}
+
                             mWeatherRecyclerViewAdapter = new WeatherRecyclerViewAdapter(MainActivity.this, mCurrentObservations);
                             mRecyclerView.setAdapter(mWeatherRecyclerViewAdapter);
                         }
@@ -118,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mEditTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if(!(placeName.isEmpty())){
+                    placeName.clear();
+                }
             }
 
             @Override
@@ -162,10 +168,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setCurrentWeatherCondition(locationUrls);
         mWeatherRecyclerViewAdapter.notifyDataSetChanged();
 
-
         hideSoftKeyBoard();
         placeName.clear();
-        locationUrls.clear();
+        //locationUrls.clear();
     }
 
 
@@ -175,14 +180,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * @param position the position of object to be added
      */
     private void addForecastDataToDb(int position) {
-
+        locationUrls.clear();
         List<AutoCompleteSearchForecast> forecastList = AutoCompleteService.getAutoCompleteSearchForecasts();
         String url = forecastList.get(position).getL();
         String placeName = forecastList.get(position).getName();
 
         boolean inserted = mDefaultLocationWeatherDb.insertWeatherData(url, placeName);
         if (inserted == true) {
-            locationUrls.add(url + WUNDERGROUND_REQUEST_FORMAT);
+            locationUrls.add(url);
         } else {
             return;
         }
@@ -190,14 +195,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     private void setAllForecastFromDb() {
-
         if (mAutoCompleteSearchForecastsFromDB != null) {
             for (AutoCompleteSearchForecast forecast : mAutoCompleteSearchForecastsFromDB) {
-
-                locationUrls.add(forecast.getL() + WUNDERGROUND_REQUEST_FORMAT);
+                if(!(locationUrls.contains(forecast.getL()))){
+                    locationUrls.add(forecast.getL());
+                }
             }
         } else {
-            Toast.makeText(this, "", Toast.LENGTH_LONG).show();
+            Log.d("allan", "mAutoCompleteSearchForecastsFromDB is null");
         }
     }
 
@@ -217,11 +222,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             String placeName = forecast.getName();
 
             if (!(mAutoCompleteSearchForecastsFromDB.contains(forecast))) {
-
                 boolean inserted = mDefaultLocationWeatherDb.insertWeatherData(url, placeName);
                 if (inserted == true) {
                     //locationUrls.add(url + ".json");
-                    Log.d("allan", "success");
+                    Log.d("allan", "success adding default location to db");
                 } else {
                     Log.d("allan", "no object added===================================================================");
 
