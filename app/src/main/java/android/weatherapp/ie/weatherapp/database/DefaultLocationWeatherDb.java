@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * Created by allan on 07/04/2016.
  */
-public class CurrentWeatherDb {
+public class DefaultLocationWeatherDb {
 
     private CurrentWeatherDbHelper mDbHelper;
     private SQLiteDatabase mSQLiteDatabase;
 
-    public CurrentWeatherDb(Context context) {
+    public DefaultLocationWeatherDb(Context context) {
         mDbHelper = new CurrentWeatherDbHelper(context);
         mSQLiteDatabase = mDbHelper.getWritableDatabase();
     }
