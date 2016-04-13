@@ -165,4 +165,7 @@ public class CurrentObservation {
     public void setTempC(double tempC) {
         this.tempC = tempC;
     }
+
+
+
 }

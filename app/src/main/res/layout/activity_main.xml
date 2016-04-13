@@ -37,12 +37,12 @@
             android:textColor="@android:color/white"
             android:paddingLeft="10dp"/>
 
-        <ImageButton
-            android:id="@+id/ib_remove"
+        <ImageView
+            android:id="@+id/iv_remove"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
-            android:background="@drawable/remove"/>
+            android:src="@drawable/remove"/>
 
 
     </LinearLayout>
