@@ -28,7 +28,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,9 +38,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
         View.OnClickListener,WeatherRecyclerViewAdapter.ViewHolderCallback {
 
-    private static final String WUNDERGROUND_CURRENT_CONDITION_URL = "http://api.wunderground.com/api/8259534bbb5f8830/conditions";
+    private static final String WUNDERGROUND_CURRENT_CONDITION_URL = "http://api.wunderground.com/api/a9ad5218009bdc9a/geolookup/conditions";
     private static final String WUNDERGROUND_REQUEST_FORMAT = ".json";
 
+    private ArrayList<Location>locations = new ArrayList<>();
     private List<CurrentObservation> mCurrentObservations = new ArrayList<>();
     private ListView mListViewSearchResult;
     private ArrayAdapter<String> mArrayAdapter;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final int HIDE_THRESHOLD = 20;
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
-    private boolean mIsEnabled = false;
+    private boolean mDeletionIsEnabled = false;
 
     private LocationWeatherDb mLocationWeatherDb;
 
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     void setCurrentWeatherCondition(final List<String> query) {
         GsonRequest<CurrentWeatherResponse> request = null;
+
         for (final String url : query) {
             request = new GsonRequest<>(WUNDERGROUND_CURRENT_CONDITION_URL + url+WUNDERGROUND_REQUEST_FORMAT,
                     CurrentWeatherResponse.class,
@@ -107,11 +108,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         public void onResponse(CurrentWeatherResponse response) {
 
                             CurrentObservation  currentObservation = response.getCurrentObservation();
+                            Location location = response.getLocation();
+                            locations.add(location);
                             if(currentObservation !=null){
                                 mCurrentObservations.add(currentObservation);
+
                              }
 
-                                mWeatherRecyclerViewAdapter = new WeatherRecyclerViewAdapter(MainActivity.this, mCurrentObservations);
+                                mWeatherRecyclerViewAdapter = new WeatherRecyclerViewAdapter(MainActivity.this, mCurrentObservations,locations);
                                 mRecyclerView.setAdapter(mWeatherRecyclerViewAdapter);
 
                         }
@@ -191,17 +195,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     //Onclick method to the enable/disable deletion in remove icon
+    //vhange the icon cloud to remove icon
     @Override
     public void onClick(View v) {
-        if(!mIsEnabled){
-            mIsEnabled=true;
+        if(!mDeletionIsEnabled){
+            mDeletionIsEnabled =true;
         }
         else {
-            mIsEnabled=false;
+            mDeletionIsEnabled =false;
         }
-        Log.d("allan", "IsEnabled value " + mIsEnabled);
-        WeatherDataViewHolder.showRemoveIcon(this, mIsEnabled);
+        Log.d("allan", "IsEnabled value " + mDeletionIsEnabled);
+        //WeatherDataViewHolder.showRemoveIcon(this, mDeletionIsEnabled);
         mWeatherRecyclerViewAdapter.setViewHolderCallback(this);
+
+        for(int i=0; i < mWeatherRecyclerViewAdapter.getHolderList().size(); i++)
+        {
+            mWeatherRecyclerViewAdapter.getHolderItem(i).showRemoveIcon(this,mDeletionIsEnabled);
+        }
 
     }
 
@@ -248,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         List<AutoCompleteSearchForecast> forecastList = new ArrayList<>();
         forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03969", "Dublin, Ireland","53.43000031","-6.25000000"));
         forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03772", "London, United Kingdom","51.47999954","-0.44999999"));
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.94767", "Sydney, New South Wales","-33.95000076","151.17999268"));
+        //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.94767", "Sydney, New South Wales","-33.95000076","151.17999268"));
         //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.WZBAA", "Beijing"));
         //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.37.07156", "Paris"));
         //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.17.98426", "Olongapo, Philippines"));
@@ -276,9 +286,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     //delete forecast data in db
     @Override
-    public void deleteData(String placeName) {
-        mLocationWeatherDb.deleteWeatherData(placeName);
-        Log.d("allan", "success delete  in db? =========" +mLocationWeatherDb.deleteWeatherData(placeName));
+    public void deleteData(String locationUrl) {
+        mLocationWeatherDb.deleteWeatherData(locationUrl);
+        Log.d("allan", "success delete  in db? =========" +mLocationWeatherDb.deleteWeatherData(locationUrl));
 
     }
 

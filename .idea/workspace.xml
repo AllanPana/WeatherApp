@@ -22,7 +22,6 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="all" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
@@ -58,16 +57,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43541363">
-              <caret line="249" column="75" selection-start-line="249" selection-start-column="57" selection-end-line="249" selection-end-column="77" />
+            <state vertical-scroll-proportion="-0.5185185">
+              <caret line="211" column="53" selection-start-line="211" selection-start-column="40" selection-end-line="211" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#setEditTextSearch#0;class#MainActivity#0" expanded="false" />
                 <element signature="docComment;method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#setAllForecastFromDb#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#addDefaultLocationForecast#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#hideSearch#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#hideSoftKeyBoard#0;class#MainActivity#0" expanded="false" />
               </folding>
@@ -75,17 +76,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WeatherRecyclerViewAdapter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="WeatherRecyclerViewAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/WeatherRecyclerViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="86" column="55" selection-start-line="86" selection-start-column="55" selection-end-line="86" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.17039107">
+              <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4552#4553#0" expanded="true" />
+                <element signature="e#4601#4602#0" expanded="true" />
                 <element signature="method#getItemViewType#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+                <element signature="method#removeAt#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
                 <element signature="docComment;method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
                 <element signature="method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
-                <element signature="method#showRemoveIcon#0;class#WeatherDataViewHolder#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+                <element signature="e#6484#6485#0" expanded="true" />
+                <element signature="e#6523#6524#0" expanded="true" />
+                <element signature="e#6575#6576#0" expanded="true" />
+                <element signature="e#6615#6616#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,8 +101,8 @@
       <file leaf-file-name="LocationWeatherDb.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/database/LocationWeatherDb.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.7777777">
-              <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding>
                 <element signature="docComment;method#getAllSavedWeatherData#0;class#LocationWeatherDb#0" expanded="false" />
                 <element signature="method#getAllSavedWeatherData#0;class#LocationWeatherDb#0" expanded="false" />
@@ -1893,8 +1900,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/database/DefaultLocationWeatherDb.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/pojos/AutoCompleteSearchForecast.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/database/LocationWeatherDb.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/WeatherRecyclerViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/WeatherRecyclerViewAdapter.java" />
       </list>
     </option>
   </component>
@@ -2311,6 +2318,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="network" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WeatherApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WeatherApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weatherapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="database" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -2690,48 +2731,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>247</line>
-          <properties />
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>248</line>
-          <properties />
-          <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>258</line>
-          <properties />
-          <option name="timeStamp" value="115" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>259</line>
-          <properties />
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>72</line>
-          <properties />
-          <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>75</line>
-          <properties />
-          <option name="timeStamp" value="123" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>74</line>
-          <properties />
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/database/LocationWeatherDb.java</url>
           <line>90</line>
           <properties />
@@ -2739,28 +2738,57 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>279</line>
+          <line>288</line>
           <properties />
           <option name="timeStamp" value="126" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
-          <line>280</line>
+          <line>289</line>
           <properties />
           <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/WeatherRecyclerViewAdapter.java</url>
+          <line>101</line>
+          <properties />
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
+          <line>226</line>
+          <properties />
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
+          <line>231</line>
+          <properties />
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
+          <line>211</line>
+          <properties />
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java</url>
+          <line>209</line>
+          <properties />
+          <option name="timeStamp" value="136" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="128" />
+      <option name="time" value="137" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
-        <watch expression="mLocationFromDB" language="JAVA" custom="" />
-        <watch expression="CurrentWeatherDbHelper.TABLE_NAME" language="JAVA" custom="" />
-        <watch expression="CurrentWeatherDbHelper.COLUMN_PLACE_NAME" language="JAVA" custom="" />
-        <watch expression="1 = {Location@20718} &quot;Location{type='null', country='null', countryIso3166='null', countryName='null', state='null', city='Olongapo, Philippines', lat='14.829166', lon='120.282776', zip='null', l='/q/zmw:00000.17.98426'}&quot;" />
+        <watch expression="mWeatherRecyclerViewAdapter.getHolderList().size()" language="JAVA" custom="" />
+        <watch expression="mDeletionIsEnabled" language="JAVA" custom="" />
+        <watch expression="mWeatherRecyclerViewAdapter" language="JAVA" custom="" />
       </configuration>
     </watches-manager>
   </component>
@@ -2784,7 +2812,9 @@
             <element signature="imports" expanded="true" />
             <element signature="method#setEditTextSearch#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setAllForecastFromDb#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#addDefaultLocationForecast#0;class#MainActivity#0" expanded="false" />
             <element signature="method#hideSearch#0;class#MainActivity#0" expanded="false" />
             <element signature="method#hideSoftKeyBoard#0;class#MainActivity#0" expanded="false" />
           </folding>
@@ -2797,10 +2827,16 @@
           <caret line="69" column="381" selection-start-line="69" selection-start-column="381" selection-end-line="69" selection-end-column="381" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4552#4553#0" expanded="true" />
+            <element signature="e#4601#4602#0" expanded="true" />
             <element signature="method#getItemViewType#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+            <element signature="method#removeAt#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
             <element signature="docComment;method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
             <element signature="method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
-            <element signature="method#showRemoveIcon#0;class#WeatherDataViewHolder#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+            <element signature="e#6484#6485#0" expanded="true" />
+            <element signature="e#6523#6524#0" expanded="true" />
+            <element signature="e#6575#6576#0" expanded="true" />
+            <element signature="e#6615#6616#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2813,7 +2849,9 @@
             <element signature="imports" expanded="true" />
             <element signature="method#setEditTextSearch#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setAllForecastFromDb#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#addDefaultLocationForecast#0;class#MainActivity#0" expanded="false" />
             <element signature="method#hideSearch#0;class#MainActivity#0" expanded="false" />
             <element signature="method#hideSoftKeyBoard#0;class#MainActivity#0" expanded="false" />
           </folding>
@@ -3166,24 +3204,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/WeatherRecyclerViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="55" selection-start-line="86" selection-start-column="55" selection-end-line="86" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getItemViewType#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
-            <element signature="docComment;method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
-            <element signature="method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
-            <element signature="method#showRemoveIcon#0;class#WeatherDataViewHolder#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/database/LocationWeatherDb.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.7777777">
-          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
           <folding>
             <element signature="docComment;method#getAllSavedWeatherData#0;class#LocationWeatherDb#0" expanded="false" />
             <element signature="method#getAllSavedWeatherData#0;class#LocationWeatherDb#0" expanded="false" />
@@ -3193,15 +3217,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43541363">
-          <caret line="249" column="75" selection-start-line="249" selection-start-column="57" selection-end-line="249" selection-end-column="77" />
+        <state vertical-scroll-proportion="-0.5185185">
+          <caret line="211" column="53" selection-start-line="211" selection-start-column="40" selection-end-line="211" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#setEditTextSearch#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#addForecastDataToDb#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setAllForecastFromDb#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#addDefaultLocationForecast#0;class#MainActivity#0" expanded="false" />
             <element signature="method#hideSearch#0;class#MainActivity#0" expanded="false" />
             <element signature="method#hideSoftKeyBoard#0;class#MainActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/weatherapp/ie/weatherapp/WeatherRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17039107">
+          <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4552#4553#0" expanded="true" />
+            <element signature="e#4601#4602#0" expanded="true" />
+            <element signature="method#getItemViewType#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+            <element signature="method#removeAt#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+            <element signature="docComment;method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+            <element signature="method#setTime#0;class#WeatherRecyclerViewAdapter#0" expanded="false" />
+            <element signature="e#6484#6485#0" expanded="true" />
+            <element signature="e#6523#6524#0" expanded="true" />
+            <element signature="e#6575#6576#0" expanded="true" />
+            <element signature="e#6615#6616#0" expanded="true" />
           </folding>
         </state>
       </provider>

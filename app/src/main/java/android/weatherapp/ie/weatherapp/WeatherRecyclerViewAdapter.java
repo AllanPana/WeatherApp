@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.weatherapp.ie.weatherapp.pojos.CurrentObservation;
+import android.weatherapp.ie.weatherapp.pojos.Location;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,13 +32,17 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
     private int mHolderViewType;
     private Context mContext;
     private List<CurrentObservation> mList = new ArrayList<>();
+    List<Location>mLocations = new ArrayList<>();
     private LayoutInflater mLayoutInflater;
     private static ViewHolderCallback mViewHolderCallback;
 
+    private List<WeatherDataViewHolder> mWeatherDataViewHolderList = new ArrayList<>();
 
-    public WeatherRecyclerViewAdapter(Context context, List<CurrentObservation> list) {
+
+    public WeatherRecyclerViewAdapter(Context context, List<CurrentObservation> list, List<Location>locations) {
         mContext = context;
         mList = list;
+        mLocations = locations;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
@@ -58,7 +63,8 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
 
     @Override
     public void onBindViewHolder(WeatherDataViewHolder holder, final int position) {
-        final CurrentObservation currentWeather = mList.get(position);
+        CurrentObservation currentWeather = mList.get(position);
+        final Location location = mLocations.get(position);
 
         //need this string tz for setting up the date/time
         String tz = currentWeather.getLocalTzLong();
@@ -73,9 +79,18 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
         holder.tv_city.setText(city);
         holder.tv_time.setText(setTime(time, tz));
         holder.tv_temp.setText(stringTemp + DEGREE_CELCIUS);
+        //holder.im_.setImageDrawable(context.getResources().getDrawable(R.drawable.remove, null));
 
+        String image = "http://assets.fodors.com/destinations/2869/tower-bridge-london-england_main.jpg";
+        String image2 = "http://m2.her.ie/YToyOntzOjQ6ImRhdGEiO3M6MTU5OiJhOjM6e3M6MzoidXJsIjtzOjk4OiJodHRwOi8vbWVkaWEtaGVyLm1heGltdW1tZWRpYS5pZS5zMy5hbWF6b25hd3MuY29tL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE1LzA0LzE5MjMyODE5L2R1Ymxpbi0yLmpwZyI7czo1OiJ3aWR0aCI7aTo2NDc7czo2OiJoZWlnaHQiO2k6MzQwO30iO3M6NDoiaGFzaCI7czo0MDoiMDQxOWI1YzI1YTU4ZDIyY2MyYTU4OTJhN2E0ZDEzYzY2ZjNiZGFiZiI7fQ==/dublin-2.jpg";
+        String image3 = null;
+        if (mHolderViewType == TYPE_HEADER){
+            image3=image;
+        }else {
+            image3=image2;
+        }
         Glide.with(holder.iv_city_background.getContext())
-                .load("http://m2.her.ie/YToyOntzOjQ6ImRhdGEiO3M6MTU5OiJhOjM6e3M6MzoidXJsIjtzOjk4OiJodHRwOi8vbWVkaWEtaGVyLm1heGltdW1tZWRpYS5pZS5zMy5hbWF6b25hd3MuY29tL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE1LzA0LzE5MjMyODE5L2R1Ymxpbi0yLmpwZyI7czo1OiJ3aWR0aCI7aTo2NDc7czo2OiJoZWlnaHQiO2k6MzQwO30iO3M6NDoiaGFzaCI7czo0MDoiMDQxOWI1YzI1YTU4ZDIyY2MyYTU4OTJhN2E0ZDEzYzY2ZjNiZGFiZiI7fQ==/dublin-2.jpg")
+                .load(image3)
                 .into(holder.iv_city_background);
 
 
@@ -84,14 +99,22 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
             @Override
             public void onClick(View v) {
                 removeAt(position);
-                mViewHolderCallback.deleteData(fullName);
+                mViewHolderCallback.deleteData(location.getL());
 
             }
         });
         holder.im_cloud.setEnabled(false);
 
+        mWeatherDataViewHolderList.add(holder);
+    }
 
 
+    public List<WeatherDataViewHolder> getHolderList(){
+        return mWeatherDataViewHolderList;
+    }
+
+    public WeatherDataViewHolder getHolderItem(int position){
+        return mWeatherDataViewHolderList.get(position);
     }
 
 
@@ -149,10 +172,11 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
      */
     public static class WeatherDataViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_city_background;
-        private TextView tv_city;
+        public TextView tv_city;
         private TextView tv_time;
         private TextView tv_temp;
-        private static ImageView im_cloud;
+        private ImageView im_cloud;
+
 
         public WeatherDataViewHolder(View itemView) {
             super(itemView);
@@ -163,8 +187,14 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
             im_cloud = (ImageView) itemView.findViewById(R.id.im_cloud);
         }
 
+
+        public ImageView getIm_cloud() {
+            return im_cloud;
+        }
+
+
         //show/hide the remove icon
-        public static void showRemoveIcon(Context context, boolean isEnabled) {
+        public void showRemoveIcon(Context context, boolean isEnabled) {
             if(isEnabled) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     im_cloud.setImageDrawable(context.getResources().getDrawable(R.drawable.remove, null));

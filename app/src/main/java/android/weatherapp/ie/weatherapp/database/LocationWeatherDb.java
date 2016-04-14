@@ -83,12 +83,12 @@ public class LocationWeatherDb {
      * DELETE
      * Delete * from TABLE_NAME WHERE COLUMN_LOCATION_URL = locationURL
      *
-     * @param placeName  of the  object to be deleted
+     * @param locationUrl  of the  object to be deleted
      * @return
      */
-    public boolean deleteWeatherData(String placeName) {
-        String[] whereArgs = {placeName};
-        return mSQLiteDatabase.delete(CurrentWeatherDbHelper.TABLE_NAME,CurrentWeatherDbHelper.COLUMN_PLACE_NAME + "=?",whereArgs)>0;  //prevent sql injection
+    public long deleteWeatherData(String locationUrl) {
+        String[] whereArgs = {locationUrl};
+        return mSQLiteDatabase.delete(CurrentWeatherDbHelper.TABLE_NAME,CurrentWeatherDbHelper.COLUMN_LOCATION_URL + "=?",whereArgs);  //prevent sql injection
         //return mSQLiteDatabase.delete(CurrentWeatherDbHelper.TABLE_NAME,CurrentWeatherDbHelper.COLUMN_PLACE_NAME + "='"+placeName+"'",null);
     }
 
