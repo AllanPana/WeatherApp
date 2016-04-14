@@ -9,6 +9,9 @@ import com.google.gson.annotations.SerializedName;
 public class CurrentWeatherResponse {
 
 
+    @SerializedName("location")
+    @Expose
+    private Location location;
 
 
 
@@ -36,4 +39,11 @@ public class CurrentWeatherResponse {
     }
 
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }

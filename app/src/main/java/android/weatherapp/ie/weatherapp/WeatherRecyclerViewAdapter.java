@@ -58,16 +58,21 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
 
     @Override
     public void onBindViewHolder(WeatherDataViewHolder holder, final int position) {
-        CurrentObservation currentWeather = mList.get(position);
-
-        String stringTemp = String.format("%.0f", currentWeather.getTempC());
+        final CurrentObservation currentWeather = mList.get(position);
 
         //need this string tz for setting up the date/time
         String tz = currentWeather.getLocalTzLong();
-        holder.tv_city.setText(currentWeather.getCurrentWeatherDisplayLocation().getCity());
-        holder.tv_time.setText(setTime(currentWeather.getLocalTimeRfc822(), tz));
+        final String fullName = currentWeather.getCurrentWeatherDisplayLocation().getFull();
+        String latitude = currentWeather.getCurrentWeatherDisplayLocation().getLatitude();
+        String longitude = currentWeather.getCurrentWeatherDisplayLocation().getLongitude();
+        String city = currentWeather.getCurrentWeatherDisplayLocation().getCity();
+        String time = currentWeather.getLocalTimeRfc822();
+        double tempCelsius = currentWeather.getTempC();
+        String stringTemp = String.format("%.0f", tempCelsius);
+
+        holder.tv_city.setText(city);
+        holder.tv_time.setText(setTime(time, tz));
         holder.tv_temp.setText(stringTemp + DEGREE_CELCIUS);
-        Log.d("time", currentWeather.getObservationTimeRfc822());
 
         Glide.with(holder.iv_city_background.getContext())
                 .load("http://m2.her.ie/YToyOntzOjQ6ImRhdGEiO3M6MTU5OiJhOjM6e3M6MzoidXJsIjtzOjk4OiJodHRwOi8vbWVkaWEtaGVyLm1heGltdW1tZWRpYS5pZS5zMy5hbWF6b25hd3MuY29tL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDE1LzA0LzE5MjMyODE5L2R1Ymxpbi0yLmpwZyI7czo1OiJ3aWR0aCI7aTo2NDc7czo2OiJoZWlnaHQiO2k6MzQwO30iO3M6NDoiaGFzaCI7czo0MDoiMDQxOWI1YzI1YTU4ZDIyY2MyYTU4OTJhN2E0ZDEzYzY2ZjNiZGFiZiI7fQ==/dublin-2.jpg")
@@ -79,11 +84,13 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
             @Override
             public void onClick(View v) {
                 removeAt(position);
-                mViewHolderCallback.deleteData(position);
+                mViewHolderCallback.deleteData(fullName);
 
             }
         });
         holder.im_cloud.setEnabled(false);
+
+
 
     }
 
@@ -189,7 +196,7 @@ public class WeatherRecyclerViewAdapter extends RecyclerView.Adapter<WeatherRecy
      *
      */
     interface ViewHolderCallback{
-        void deleteData(int position);
+        void deleteData(String city);
     }
 
 }

@@ -14,12 +14,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.weatherapp.ie.weatherapp.WeatherRecyclerViewAdapter.WeatherDataViewHolder;
-import android.weatherapp.ie.weatherapp.database.DefaultLocationWeatherDb;
+import android.weatherapp.ie.weatherapp.database.LocationWeatherDb;
 import android.weatherapp.ie.weatherapp.network.GsonRequest;
 import android.weatherapp.ie.weatherapp.network.VolleySingleton;
 import android.weatherapp.ie.weatherapp.pojos.AutoCompleteSearchForecast;
 import android.weatherapp.ie.weatherapp.pojos.CurrentObservation;
 import android.weatherapp.ie.weatherapp.pojos.CurrentWeatherResponse;
+import android.weatherapp.ie.weatherapp.pojos.Location;
 import android.weatherapp.ie.weatherapp.weatherService.AutoCompleteService;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,7 +39,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
         View.OnClickListener,WeatherRecyclerViewAdapter.ViewHolderCallback {
 
-    private static final String WUNDERGROUND_CURRENT_CONDITION_URL = "http://api.wunderground.com/api/38ef208cc476fe4b/conditions";
+    private static final String WUNDERGROUND_CURRENT_CONDITION_URL = "http://api.wunderground.com/api/8259534bbb5f8830/conditions";
     private static final String WUNDERGROUND_REQUEST_FORMAT = ".json";
 
     private List<CurrentObservation> mCurrentObservations = new ArrayList<>();
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayAdapter<String> mArrayAdapter;
     private List<String> placeName = new ArrayList<>();
     List<String> locationUrls = new ArrayList<>();
-    private List<AutoCompleteSearchForecast> mAutoCompleteSearchForecastsFromDB = new ArrayList<>();
+    private List<Location> mLocationFromDB = new ArrayList<>();
 
     private LinearLayout mLinearLayout;
     private ImageView mImageViewRemove;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private boolean controlsVisible = true;
     private boolean mIsEnabled = false;
 
-    private DefaultLocationWeatherDb mDefaultLocationWeatherDb;
+    private LocationWeatherDb mLocationWeatherDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         hideSoftKeyBoard();
 
-        mDefaultLocationWeatherDb = new DefaultLocationWeatherDb(this);
-        mAutoCompleteSearchForecastsFromDB = mDefaultLocationWeatherDb.getAllSavedWeatherData();
-        if(mAutoCompleteSearchForecastsFromDB.isEmpty()){
+        mLocationWeatherDb = new LocationWeatherDb(this);
+        mLocationFromDB = mLocationWeatherDb.getAllSavedWeatherData();
+        if(mLocationFromDB.isEmpty()){
             addDefaultLocationForecast();
-            mAutoCompleteSearchForecastsFromDB = mDefaultLocationWeatherDb.getAllSavedWeatherData();
+            mLocationFromDB = mLocationWeatherDb.getAllSavedWeatherData();
         }
         setAllForecastFromDb();
 
@@ -105,15 +106,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         @Override
                         public void onResponse(CurrentWeatherResponse response) {
 
-
                             CurrentObservation  currentObservation = response.getCurrentObservation();
                             if(currentObservation !=null){
                                 mCurrentObservations.add(currentObservation);
-                            }
+                             }
 
                                 mWeatherRecyclerViewAdapter = new WeatherRecyclerViewAdapter(MainActivity.this, mCurrentObservations);
                                 mRecyclerView.setAdapter(mWeatherRecyclerViewAdapter);
-
 
                         }
                     },
@@ -218,34 +217,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         List<AutoCompleteSearchForecast> forecastList = AutoCompleteService.getAutoCompleteSearchForecasts();
         String url = forecastList.get(position).getL();
         String placeName = forecastList.get(position).getName();
+        String latitude = forecastList.get(position).getLat();
+        String longitude = forecastList.get(position).getLon();
 
-        boolean inserted = mDefaultLocationWeatherDb.insertWeatherData(url, placeName);
+        boolean inserted = mLocationWeatherDb.insertWeatherData(url, placeName, latitude, longitude);
         if (inserted == true) {
             locationUrls.add(url);
-            mAutoCompleteSearchForecastsFromDB = mDefaultLocationWeatherDb.getAllSavedWeatherData();
+            mLocationFromDB = mLocationWeatherDb.getAllSavedWeatherData();
         } else {
             return;
         }
     }
 
 
-    private void deleteForecastDatainDb(int position){
-            mDefaultLocationWeatherDb.deleteWeatherData(mAutoCompleteSearchForecastsFromDB.get(position).getL());
-        Log.d("allan", String.valueOf(mDefaultLocationWeatherDb.deleteWeatherData(mAutoCompleteSearchForecastsFromDB.get(position).getL())));
-        Log.d("allan", mAutoCompleteSearchForecastsFromDB.get(position).getL());
-
-    }
-
-
     private void setAllForecastFromDb() {
-        if (mAutoCompleteSearchForecastsFromDB != null) {
-            for (AutoCompleteSearchForecast forecast : mAutoCompleteSearchForecastsFromDB) {
-                if(!(locationUrls.contains(forecast.getL()))){
-                    locationUrls.add(forecast.getL());
+        if (mLocationFromDB != null) {
+            for (Location location : mLocationFromDB) {
+                if(!(locationUrls.contains(location.getL()))){
+                    locationUrls.add(location.getL());
                 }
             }
         } else {
-            Log.d("allan", "mAutoCompleteSearchForecastsFromDB is null");
+            Log.d("allan", "mLocationFromDB is null");
         }
     }
 
@@ -253,19 +246,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //add/insert default city
     private void addDefaultLocationForecast() {
         List<AutoCompleteSearchForecast> forecastList = new ArrayList<>();
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03969", "Dublin"));
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03772", "London"));
-        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.94767", "Sydney"));
+        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03969", "Dublin, Ireland","53.43000031","-6.25000000"));
+        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.03772", "London, United Kingdom","51.47999954","-0.44999999"));
+        forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.94767", "Sydney, New South Wales","-33.95000076","151.17999268"));
         //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.1.WZBAA", "Beijing"));
         //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.37.07156", "Paris"));
-        //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.17.98426", "Olongapo"));
+        //forecastList.add(new AutoCompleteSearchForecast("/q/zmw:00000.17.98426", "Olongapo, Philippines"));
 
         for (AutoCompleteSearchForecast forecast : forecastList) {
             String url = forecast.getL();
             String placeName = forecast.getName();
+            String latitude = forecast.getLat();
+            String longitude = forecast.getLon();
 
-            if (!(mAutoCompleteSearchForecastsFromDB.contains(forecast))) {
-                boolean inserted = mDefaultLocationWeatherDb.insertWeatherData(url, placeName);
+            if (!(mLocationFromDB.contains(forecast))) {
+                boolean inserted = mLocationWeatherDb.insertWeatherData(url, placeName,latitude, longitude);
                 if (inserted == true) {
                     //locationUrls.add(url);
                     Log.d("allan", "success adding default location to db");
@@ -273,10 +268,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     Log.d("allan", "no object added===================================================================");
 
                 }
-
             }
-
         }
+    }
+
+
+
+    //delete forecast data in db
+    @Override
+    public void deleteData(String placeName) {
+        mLocationWeatherDb.deleteWeatherData(placeName);
+        Log.d("allan", "success delete  in db? =========" +mLocationWeatherDb.deleteWeatherData(placeName));
+
     }
 
 
@@ -322,13 +325,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //delete forecast data in db
-    @Override
-    public void deleteData(int position) {
-        deleteForecastDatainDb(position);
-        //mWeatherRecyclerViewAdapter.notifyItemRemoved(position);
-        Toast.makeText(this,position+"",Toast.LENGTH_LONG).show();
-    }
+
 }
 
 

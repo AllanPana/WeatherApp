@@ -49,9 +49,11 @@ public class AutoCompleteSearchForecast {
     public AutoCompleteSearchForecast() {
     }
 
-    public AutoCompleteSearchForecast(String l, String name) {
+    public AutoCompleteSearchForecast(String l, String name, String lat, String lon) {
         this.l = l;
         this.name = name;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     /**
